@@ -19,13 +19,27 @@ poetry add dopt-blocks-python-client
 from dopt.client import DoptApi
 
 client = DoptApi(api_key="YOUR_API_KEY)
-response = client.find_blocks(
-  uid="xqC0wpZgoaYXbAPk8W0sk",
-  user_identifier="example-user-idenitifer",
-  version=3
-);
 
-print(response)
+# Fetch a flow from dopt, including its blocks.  The first fetch of
+# this (flow.sid, flow.version) tuple will initialize the flow for
+# the `user_identifier`
+
+flow = client.flows.get_flow(
+    sid="example-flow",
+    version=1,
+    include="block",
+    user_identifier="joe_mckenney",
+    group_identifier=None,
+)
+
+print(flow)
+
+# Fetch a block for some previously initialized flow
+block = client.blocks.get_block(
+    uid="9sKe7gx4HZj_VI7oxfVD3", version=1, user_identifier="joe_mckenney"
+)
+
+print(block)
 ```
 
 ## Async Client
@@ -36,15 +50,17 @@ from dopt.client import AsyncDoptApi
 
 async_client = AsyncDoptApi(api_key="YOUR_API_KEY)
 
-async def get_blocks() -> None:
-    response = async_client.find_blocks(
-      uid="xqC0wpZgoaYXbAPk8W0sk",
-      user_identifier="example-user-idenitifer",
-      version=3
+async def get_flow() -> None:
+    response = async_client.flows.get_flow(
+      sid="example-flow",
+      version=1,
+      include="block",
+      user_identifier="joe_mckenney",
+      group_identifier=None,
     );
     print(response)
 
-asyncio.run(get_blocks())
+asyncio.run(get_flow())
 ```
 
 ## Contributing
