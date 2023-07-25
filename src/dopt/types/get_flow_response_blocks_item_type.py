@@ -8,6 +8,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class GetFlowResponseBlocksItemType(str, enum.Enum):
     CUSTOM = "custom"
+    CARD = "card"
     MODAL = "modal"
     CHECKLIST = "checklist"
     CHECKLIST_ITEM = "checklistItem"
@@ -17,6 +18,7 @@ class GetFlowResponseBlocksItemType(str, enum.Enum):
     def visit(
         self,
         custom: typing.Callable[[], T_Result],
+        card: typing.Callable[[], T_Result],
         modal: typing.Callable[[], T_Result],
         checklist: typing.Callable[[], T_Result],
         checklist_item: typing.Callable[[], T_Result],
@@ -25,6 +27,8 @@ class GetFlowResponseBlocksItemType(str, enum.Enum):
     ) -> T_Result:
         if self is GetFlowResponseBlocksItemType.CUSTOM:
             return custom()
+        if self is GetFlowResponseBlocksItemType.CARD:
+            return card()
         if self is GetFlowResponseBlocksItemType.MODAL:
             return modal()
         if self is GetFlowResponseBlocksItemType.CHECKLIST:
