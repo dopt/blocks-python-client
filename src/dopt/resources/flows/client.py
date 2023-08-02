@@ -70,11 +70,17 @@ class FlowsClient:
         version: float,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        force: typing.Optional[bool] = None,
     ) -> None:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
-            params={"version": version, "userIdentifier": user_identifier, "groupIdentifier": group_identifier},
+            params={
+                "version": version,
+                "userIdentifier": user_identifier,
+                "groupIdentifier": group_identifier,
+                "force": force,
+            },
             json=jsonable_encoder({}),
             headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
             timeout=60,
@@ -147,12 +153,18 @@ class AsyncFlowsClient:
         version: float,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        force: typing.Optional[bool] = None,
     ) -> None:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
-                params={"version": version, "userIdentifier": user_identifier, "groupIdentifier": group_identifier},
+                params={
+                    "version": version,
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
+                    "force": force,
+                },
                 json=jsonable_encoder({}),
                 headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
                 timeout=60,
