@@ -6,10 +6,12 @@ import typing
 import pydantic
 
 from ..core.datetime_utils import serialize_datetime
+from .flow_intent_query_string_tag import FlowIntentQueryStringTag
 
 
 class FlowIntentQueryString(pydantic.BaseModel):
-    version: float
+    version: typing.Optional[float]
+    tag: typing.Optional[FlowIntentQueryStringTag]
     user_identifier: str = pydantic.Field(alias="userIdentifier")
     group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
     force: typing.Optional[bool]

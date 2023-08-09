@@ -16,8 +16,10 @@ from ...errors.bad_request_error import BadRequestError
 from ...errors.internal_server_error import InternalServerError
 from ...errors.not_found_error import NotFoundError
 from ...errors.unauthorized_error import UnauthorizedError
+from ...types.get_flow_request_tag import GetFlowRequestTag
 from ...types.get_flow_response import GetFlowResponse
 from ...types.intent_request_intent import IntentRequestIntent
+from ...types.intent_request_tag import IntentRequestTag
 
 
 class FlowsClient:
@@ -29,7 +31,8 @@ class FlowsClient:
         self,
         sid: str,
         *,
-        version: float,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[GetFlowRequestTag] = None,
         include: typing.Optional[typing_extensions.Literal["block"]] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
@@ -39,6 +42,7 @@ class FlowsClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{sid}"),
             params={
                 "version": version,
+                "tag": tag,
                 "include": include,
                 "userIdentifier": user_identifier,
                 "groupIdentifier": group_identifier,
@@ -67,7 +71,8 @@ class FlowsClient:
         uid: str,
         intent: IntentRequestIntent,
         *,
-        version: float,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[IntentRequestTag] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
         force: typing.Optional[bool] = None,
@@ -77,6 +82,7 @@ class FlowsClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
             params={
                 "version": version,
+                "tag": tag,
                 "userIdentifier": user_identifier,
                 "groupIdentifier": group_identifier,
                 "force": force,
@@ -111,7 +117,8 @@ class AsyncFlowsClient:
         self,
         sid: str,
         *,
-        version: float,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[GetFlowRequestTag] = None,
         include: typing.Optional[typing_extensions.Literal["block"]] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
@@ -122,6 +129,7 @@ class AsyncFlowsClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{sid}"),
                 params={
                     "version": version,
+                    "tag": tag,
                     "include": include,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
@@ -150,7 +158,8 @@ class AsyncFlowsClient:
         uid: str,
         intent: IntentRequestIntent,
         *,
-        version: float,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[IntentRequestTag] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
         force: typing.Optional[bool] = None,
@@ -161,6 +170,7 @@ class AsyncFlowsClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
                 params={
                     "version": version,
+                    "tag": tag,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
                     "force": force,

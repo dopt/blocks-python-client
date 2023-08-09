@@ -6,6 +6,7 @@ from .block_transition_query_string import BlockTransitionQueryString
 from .block_transition_request_body import BlockTransitionRequestBody
 from .block_transition_request_params import BlockTransitionRequestParams
 from .flow_intent_query_string import FlowIntentQueryString
+from .flow_intent_query_string_tag import FlowIntentQueryStringTag
 from .flow_intent_request_body import FlowIntentRequestBody
 from .flow_intent_request_params import FlowIntentRequestParams
 from .flow_intent_request_params_intent import FlowIntentRequestParamsIntent
@@ -19,7 +20,9 @@ from .get_block_response_fields_item_get_block_response_fields_item import (
 from .get_block_response_state import GetBlockResponseState
 from .get_block_response_type import GetBlockResponseType
 from .get_flow_query_string import GetFlowQueryString
+from .get_flow_query_string_tag import GetFlowQueryStringTag
 from .get_flow_request_params import GetFlowRequestParams
+from .get_flow_request_tag import GetFlowRequestTag
 from .get_flow_response import GetFlowResponse
 from .get_flow_response_blocks_item import GetFlowResponseBlocksItem
 from .get_flow_response_blocks_item_fields_item import GetFlowResponseBlocksItemFieldsItem
@@ -31,6 +34,7 @@ from .get_flow_response_blocks_item_type import GetFlowResponseBlocksItemType
 from .get_flow_response_state import GetFlowResponseState
 from .health_check_response_body import HealthCheckResponseBody
 from .intent_request_intent import IntentRequestIntent
+from .intent_request_tag import IntentRequestTag
 from .internal_server_error_response_body import InternalServerErrorResponseBody
 from .not_found_error_response_body import NotFoundErrorResponseBody
 from .timeout_error_response_body import TimeoutErrorResponseBody
@@ -43,6 +47,7 @@ __all__ = [
     "BlockTransitionRequestBody",
     "BlockTransitionRequestParams",
     "FlowIntentQueryString",
+    "FlowIntentQueryStringTag",
     "FlowIntentRequestBody",
     "FlowIntentRequestParams",
     "FlowIntentRequestParamsIntent",
@@ -54,7 +59,9 @@ __all__ = [
     "GetBlockResponseState",
     "GetBlockResponseType",
     "GetFlowQueryString",
+    "GetFlowQueryStringTag",
     "GetFlowRequestParams",
+    "GetFlowRequestTag",
     "GetFlowResponse",
     "GetFlowResponseBlocksItem",
     "GetFlowResponseBlocksItemFieldsItem",
@@ -64,6 +71,7 @@ __all__ = [
     "GetFlowResponseState",
     "HealthCheckResponseBody",
     "IntentRequestIntent",
+    "IntentRequestTag",
     "InternalServerErrorResponseBody",
     "NotFoundErrorResponseBody",
     "TimeoutErrorResponseBody",

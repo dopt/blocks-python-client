@@ -7,10 +7,12 @@ import pydantic
 import typing_extensions
 
 from ..core.datetime_utils import serialize_datetime
+from .get_flow_query_string_tag import GetFlowQueryStringTag
 
 
 class GetFlowQueryString(pydantic.BaseModel):
-    version: float
+    version: typing.Optional[float]
+    tag: typing.Optional[GetFlowQueryStringTag]
     include: typing.Optional[typing_extensions.Literal["block"]]
     user_identifier: str = pydantic.Field(alias="userIdentifier")
     group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
