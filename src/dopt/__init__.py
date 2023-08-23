@@ -5,7 +5,6 @@ from .errors import BadRequestError, InternalServerError, NotFoundError, Unautho
 from .resources import blocks, flows
 from .types import (
     BadRequestErrorResponseBody,
-    BadRequestErrorResponseBodyCode,
     BlockTransitionQueryString,
     BlockTransitionRequestBody,
     BlockTransitionRequestParams,
@@ -44,7 +43,6 @@ from .types import (
 __all__ = [
     "BadRequestError",
     "BadRequestErrorResponseBody",
-    "BadRequestErrorResponseBodyCode",
     "BlockTransitionQueryString",
     "BlockTransitionRequestBody",
     "BlockTransitionRequestParams",
