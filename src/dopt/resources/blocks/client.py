@@ -4,31 +4,40 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
-from ...environment import DoptApiEnvironment
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...errors.bad_request_error import BadRequestError
 from ...errors.internal_server_error import InternalServerError
 from ...errors.not_found_error import NotFoundError
 from ...errors.unauthorized_error import UnauthorizedError
 from ...types.get_block_response import GetBlockResponse
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class BlocksClient:
-    def __init__(self, *, environment: DoptApiEnvironment = DoptApiEnvironment.DEFAULT, api_key: str):
-        self._environment = environment
-        self.api_key = api_key
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     def get_block(self, uid: str, *, version: float, user_identifier: str) -> GetBlockResponse:
-        _response = httpx.request(
+        """
+        Parameters:
+            - uid: str.
+
+            - version: float.
+
+            - user_identifier: str.
+        """
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}"),
-            params={"version": version, "userIdentifier": user_identifier},
-            headers=remove_none_from_headers({"x-api-key": self.api_key}),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}"),
+            params=remove_none_from_dict({"version": version, "userIdentifier": user_identifier}),
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -56,17 +65,31 @@ class BlocksClient:
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
     ) -> None:
-        _response = httpx.request(
+        """
+        Parameters:
+            - uid: str.
+
+            - transitions: typing.Union[typing.Optional[str], typing.List[str]].
+
+            - version: float.
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+        """
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}/transition"),
-            params={
-                "transitions": transitions,
-                "version": version,
-                "userIdentifier": user_identifier,
-                "groupIdentifier": group_identifier,
-            },
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}/transition"),
+            params=remove_none_from_dict(
+                {
+                    "transitions": transitions,
+                    "version": version,
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
+                }
+            ),
             json=jsonable_encoder({}),
-            headers=remove_none_from_headers({"x-api-key": self.api_key}),
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -87,19 +110,25 @@ class BlocksClient:
 
 
 class AsyncBlocksClient:
-    def __init__(self, *, environment: DoptApiEnvironment = DoptApiEnvironment.DEFAULT, api_key: str):
-        self._environment = environment
-        self.api_key = api_key
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def get_block(self, uid: str, *, version: float, user_identifier: str) -> GetBlockResponse:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}"),
-                params={"version": version, "userIdentifier": user_identifier},
-                headers=remove_none_from_headers({"x-api-key": self.api_key}),
-                timeout=60,
-            )
+        """
+        Parameters:
+            - uid: str.
+
+            - version: float.
+
+            - user_identifier: str.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}"),
+            params=remove_none_from_dict({"version": version, "userIdentifier": user_identifier}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(GetBlockResponse, _response.json())  # type: ignore
         if _response.status_code == 400:
@@ -125,20 +154,33 @@ class AsyncBlocksClient:
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}/transition"),
-                params={
+        """
+        Parameters:
+            - uid: str.
+
+            - transitions: typing.Union[typing.Optional[str], typing.List[str]].
+
+            - version: float.
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}/transition"),
+            params=remove_none_from_dict(
+                {
                     "transitions": transitions,
                     "version": version,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
-                },
-                json=jsonable_encoder({}),
-                headers=remove_none_from_headers({"x-api-key": self.api_key}),
-                timeout=60,
-            )
+                }
+            ),
+            json=jsonable_encoder({}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 400:

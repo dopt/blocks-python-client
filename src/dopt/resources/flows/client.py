@@ -4,14 +4,13 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 import typing_extensions
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
-from ...environment import DoptApiEnvironment
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...errors.bad_request_error import BadRequestError
 from ...errors.internal_server_error import InternalServerError
 from ...errors.not_found_error import NotFoundError
@@ -21,11 +20,13 @@ from ...types.get_flow_response import GetFlowResponse
 from ...types.intent_request_intent import IntentRequestIntent
 from ...types.intent_request_tag import IntentRequestTag
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class FlowsClient:
-    def __init__(self, *, environment: DoptApiEnvironment = DoptApiEnvironment.DEFAULT, api_key: str):
-        self._environment = environment
-        self.api_key = api_key
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     def get_flow(
         self,
@@ -37,17 +38,33 @@ class FlowsClient:
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
     ) -> GetFlowResponse:
-        _response = httpx.request(
+        """
+        Parameters:
+            - sid: str.
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[GetFlowRequestTag].
+
+            - include: typing.Optional[typing_extensions.Literal["block"]].
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+        """
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{sid}"),
-            params={
-                "version": version,
-                "tag": tag,
-                "include": include,
-                "userIdentifier": user_identifier,
-                "groupIdentifier": group_identifier,
-            },
-            headers=remove_none_from_headers({"x-api-key": self.api_key}),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}"),
+            params=remove_none_from_dict(
+                {
+                    "version": version,
+                    "tag": tag,
+                    "include": include,
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
+                }
+            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -77,18 +94,36 @@ class FlowsClient:
         group_identifier: typing.Optional[str] = None,
         force: typing.Optional[bool] = None,
     ) -> None:
-        _response = httpx.request(
+        """
+        Parameters:
+            - uid: str.
+
+            - intent: IntentRequestIntent.
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[IntentRequestTag].
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+
+            - force: typing.Optional[bool].
+        """
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
-            params={
-                "version": version,
-                "tag": tag,
-                "userIdentifier": user_identifier,
-                "groupIdentifier": group_identifier,
-                "force": force,
-            },
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
+            params=remove_none_from_dict(
+                {
+                    "version": version,
+                    "tag": tag,
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
+                    "force": force,
+                }
+            ),
             json=jsonable_encoder({}),
-            headers=remove_none_from_headers({"x-api-key": self.api_key}),
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -109,9 +144,8 @@ class FlowsClient:
 
 
 class AsyncFlowsClient:
-    def __init__(self, *, environment: DoptApiEnvironment = DoptApiEnvironment.DEFAULT, api_key: str):
-        self._environment = environment
-        self.api_key = api_key
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def get_flow(
         self,
@@ -123,20 +157,35 @@ class AsyncFlowsClient:
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
     ) -> GetFlowResponse:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{sid}"),
-                params={
+        """
+        Parameters:
+            - sid: str.
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[GetFlowRequestTag].
+
+            - include: typing.Optional[typing_extensions.Literal["block"]].
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}"),
+            params=remove_none_from_dict(
+                {
                     "version": version,
                     "tag": tag,
                     "include": include,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
-                },
-                headers=remove_none_from_headers({"x-api-key": self.api_key}),
-                timeout=60,
-            )
+                }
+            ),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(GetFlowResponse, _response.json())  # type: ignore
         if _response.status_code == 400:
@@ -164,21 +213,38 @@ class AsyncFlowsClient:
         group_identifier: typing.Optional[str] = None,
         force: typing.Optional[bool] = None,
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/flow/{uid}/{intent}"),
-                params={
+        """
+        Parameters:
+            - uid: str.
+
+            - intent: IntentRequestIntent.
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[IntentRequestTag].
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+
+            - force: typing.Optional[bool].
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
+            params=remove_none_from_dict(
+                {
                     "version": version,
                     "tag": tag,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
                     "force": force,
-                },
-                json=jsonable_encoder({}),
-                headers=remove_none_from_headers({"x-api-key": self.api_key}),
-                timeout=60,
-            )
+                }
+            ),
+            json=jsonable_encoder({}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 400:
