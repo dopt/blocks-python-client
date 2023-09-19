@@ -47,7 +47,7 @@ class FlowsClient:
                 "userIdentifier": user_identifier,
                 "groupIdentifier": group_identifier,
             },
-            headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+            headers=remove_none_from_headers({"x-api-key": self.api_key}),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -88,7 +88,7 @@ class FlowsClient:
                 "force": force,
             },
             json=jsonable_encoder({}),
-            headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+            headers=remove_none_from_headers({"x-api-key": self.api_key}),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -134,7 +134,7 @@ class AsyncFlowsClient:
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
                 },
-                headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+                headers=remove_none_from_headers({"x-api-key": self.api_key}),
                 timeout=60,
             )
         if 200 <= _response.status_code < 300:
@@ -176,7 +176,7 @@ class AsyncFlowsClient:
                     "force": force,
                 },
                 json=jsonable_encoder({}),
-                headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+                headers=remove_none_from_headers({"x-api-key": self.api_key}),
                 timeout=60,
             )
         if 200 <= _response.status_code < 300:

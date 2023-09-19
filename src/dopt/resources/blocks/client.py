@@ -28,7 +28,7 @@ class BlocksClient:
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}"),
             params={"version": version, "userIdentifier": user_identifier},
-            headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+            headers=remove_none_from_headers({"x-api-key": self.api_key}),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -66,7 +66,7 @@ class BlocksClient:
                 "groupIdentifier": group_identifier,
             },
             json=jsonable_encoder({}),
-            headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+            headers=remove_none_from_headers({"x-api-key": self.api_key}),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -97,7 +97,7 @@ class AsyncBlocksClient:
                 "GET",
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/block/{uid}"),
                 params={"version": version, "userIdentifier": user_identifier},
-                headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+                headers=remove_none_from_headers({"x-api-key": self.api_key}),
                 timeout=60,
             )
         if 200 <= _response.status_code < 300:
@@ -136,7 +136,7 @@ class AsyncBlocksClient:
                     "groupIdentifier": group_identifier,
                 },
                 json=jsonable_encoder({}),
-                headers=remove_none_from_headers({"X-Api-Key": self.api_key}),
+                headers=remove_none_from_headers({"x-api-key": self.api_key}),
                 timeout=60,
             )
         if 200 <= _response.status_code < 300:
