@@ -4,14 +4,12 @@ import datetime as dt
 import typing
 
 import pydantic
-import typing_extensions
 
 from ..core.datetime_utils import serialize_datetime
 
 
-class GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem(pydantic.BaseModel):
+class GetBlockResponseFieldsItemRichText(pydantic.BaseModel):
     sid: str
-    type: typing_extensions.Literal["richText"]
     value: typing.Optional[typing.List[typing.Dict[str, typing.Any]]]
 
     def json(self, **kwargs: typing.Any) -> str:

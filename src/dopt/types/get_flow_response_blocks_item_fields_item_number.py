@@ -4,15 +4,13 @@ import datetime as dt
 import typing
 
 import pydantic
-import typing_extensions
 
 from ..core.datetime_utils import serialize_datetime
 
 
-class GetBlockResponseFieldsItemGetBlockResponseFieldsItem(pydantic.BaseModel):
+class GetFlowResponseBlocksItemFieldsItemNumber(pydantic.BaseModel):
     sid: str
-    type: typing_extensions.Literal["richText"]
-    value: typing.Optional[typing.List[typing.Dict[str, typing.Any]]]
+    value: typing.Optional[float]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

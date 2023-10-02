@@ -12,10 +12,17 @@ from .flow_intent_request_params_intent import FlowIntentRequestParamsIntent
 from .get_block_query_string import GetBlockQueryString
 from .get_block_request_params import GetBlockRequestParams
 from .get_block_response import GetBlockResponse
-from .get_block_response_fields_item import GetBlockResponseFieldsItem
-from .get_block_response_fields_item_get_block_response_fields_item import (
-    GetBlockResponseFieldsItemGetBlockResponseFieldsItem,
+from .get_block_response_fields_item import (
+    GetBlockResponseFieldsItem,
+    GetBlockResponseFieldsItem_Boolean,
+    GetBlockResponseFieldsItem_Number,
+    GetBlockResponseFieldsItem_RichText,
+    GetBlockResponseFieldsItem_String,
 )
+from .get_block_response_fields_item_boolean import GetBlockResponseFieldsItemBoolean
+from .get_block_response_fields_item_number import GetBlockResponseFieldsItemNumber
+from .get_block_response_fields_item_rich_text import GetBlockResponseFieldsItemRichText
+from .get_block_response_fields_item_string import GetBlockResponseFieldsItemString
 from .get_block_response_state import GetBlockResponseState
 from .get_block_response_type import GetBlockResponseType
 from .get_flow_query_string import GetFlowQueryString
@@ -24,10 +31,17 @@ from .get_flow_request_params import GetFlowRequestParams
 from .get_flow_request_tag import GetFlowRequestTag
 from .get_flow_response import GetFlowResponse
 from .get_flow_response_blocks_item import GetFlowResponseBlocksItem
-from .get_flow_response_blocks_item_fields_item import GetFlowResponseBlocksItemFieldsItem
-from .get_flow_response_blocks_item_fields_item_get_flow_response_blocks_item_fields_item import (
-    GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem,
+from .get_flow_response_blocks_item_fields_item import (
+    GetFlowResponseBlocksItemFieldsItem,
+    GetFlowResponseBlocksItemFieldsItem_Boolean,
+    GetFlowResponseBlocksItemFieldsItem_Number,
+    GetFlowResponseBlocksItemFieldsItem_RichText,
+    GetFlowResponseBlocksItemFieldsItem_String,
 )
+from .get_flow_response_blocks_item_fields_item_boolean import GetFlowResponseBlocksItemFieldsItemBoolean
+from .get_flow_response_blocks_item_fields_item_number import GetFlowResponseBlocksItemFieldsItemNumber
+from .get_flow_response_blocks_item_fields_item_rich_text import GetFlowResponseBlocksItemFieldsItemRichText
+from .get_flow_response_blocks_item_fields_item_string import GetFlowResponseBlocksItemFieldsItemString
 from .get_flow_response_blocks_item_state import GetFlowResponseBlocksItemState
 from .get_flow_response_blocks_item_type import GetFlowResponseBlocksItemType
 from .get_flow_response_state import GetFlowResponseState
@@ -53,7 +67,14 @@ __all__ = [
     "GetBlockRequestParams",
     "GetBlockResponse",
     "GetBlockResponseFieldsItem",
-    "GetBlockResponseFieldsItemGetBlockResponseFieldsItem",
+    "GetBlockResponseFieldsItemBoolean",
+    "GetBlockResponseFieldsItemNumber",
+    "GetBlockResponseFieldsItemRichText",
+    "GetBlockResponseFieldsItemString",
+    "GetBlockResponseFieldsItem_Boolean",
+    "GetBlockResponseFieldsItem_Number",
+    "GetBlockResponseFieldsItem_RichText",
+    "GetBlockResponseFieldsItem_String",
     "GetBlockResponseState",
     "GetBlockResponseType",
     "GetFlowQueryString",
@@ -63,7 +84,14 @@ __all__ = [
     "GetFlowResponse",
     "GetFlowResponseBlocksItem",
     "GetFlowResponseBlocksItemFieldsItem",
-    "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
+    "GetFlowResponseBlocksItemFieldsItemBoolean",
+    "GetFlowResponseBlocksItemFieldsItemNumber",
+    "GetFlowResponseBlocksItemFieldsItemRichText",
+    "GetFlowResponseBlocksItemFieldsItemString",
+    "GetFlowResponseBlocksItemFieldsItem_Boolean",
+    "GetFlowResponseBlocksItemFieldsItem_Number",
+    "GetFlowResponseBlocksItemFieldsItem_RichText",
+    "GetFlowResponseBlocksItemFieldsItem_String",
     "GetFlowResponseBlocksItemState",
     "GetFlowResponseBlocksItemType",
     "GetFlowResponseState",
