@@ -32,36 +32,36 @@ class FlowsClient:
         self,
         sid: str,
         *,
+        user_identifier: str,
+        group_identifier: typing.Optional[str] = None,
         version: typing.Optional[float] = None,
         tag: typing.Optional[GetFlowRequestTag] = None,
         include: typing.Optional[typing_extensions.Literal["block"]] = None,
-        user_identifier: str,
-        group_identifier: typing.Optional[str] = None,
     ) -> GetFlowResponse:
         """
         Parameters:
             - sid: str.
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
 
             - version: typing.Optional[float].
 
             - tag: typing.Optional[GetFlowRequestTag].
 
             - include: typing.Optional[typing_extensions.Literal["block"]].
-
-            - user_identifier: str.
-
-            - group_identifier: typing.Optional[str].
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}"),
             params=remove_none_from_dict(
                 {
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
                     "version": version,
                     "tag": tag,
                     "include": include,
-                    "userIdentifier": user_identifier,
-                    "groupIdentifier": group_identifier,
                 }
             ),
             headers=self._client_wrapper.get_headers(),
@@ -88,10 +88,10 @@ class FlowsClient:
         uid: str,
         intent: IntentRequestIntent,
         *,
-        version: typing.Optional[float] = None,
-        tag: typing.Optional[IntentRequestTag] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[IntentRequestTag] = None,
         force: typing.Optional[bool] = None,
     ) -> None:
         """
@@ -100,13 +100,13 @@ class FlowsClient:
 
             - intent: IntentRequestIntent.
 
-            - version: typing.Optional[float].
-
-            - tag: typing.Optional[IntentRequestTag].
-
             - user_identifier: str.
 
             - group_identifier: typing.Optional[str].
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[IntentRequestTag].
 
             - force: typing.Optional[bool].
         """
@@ -115,10 +115,10 @@ class FlowsClient:
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
             params=remove_none_from_dict(
                 {
-                    "version": version,
-                    "tag": tag,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
+                    "version": version,
+                    "tag": tag,
                     "force": force,
                 }
             ),
@@ -151,36 +151,36 @@ class AsyncFlowsClient:
         self,
         sid: str,
         *,
+        user_identifier: str,
+        group_identifier: typing.Optional[str] = None,
         version: typing.Optional[float] = None,
         tag: typing.Optional[GetFlowRequestTag] = None,
         include: typing.Optional[typing_extensions.Literal["block"]] = None,
-        user_identifier: str,
-        group_identifier: typing.Optional[str] = None,
     ) -> GetFlowResponse:
         """
         Parameters:
             - sid: str.
+
+            - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
 
             - version: typing.Optional[float].
 
             - tag: typing.Optional[GetFlowRequestTag].
 
             - include: typing.Optional[typing_extensions.Literal["block"]].
-
-            - user_identifier: str.
-
-            - group_identifier: typing.Optional[str].
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}"),
             params=remove_none_from_dict(
                 {
+                    "userIdentifier": user_identifier,
+                    "groupIdentifier": group_identifier,
                     "version": version,
                     "tag": tag,
                     "include": include,
-                    "userIdentifier": user_identifier,
-                    "groupIdentifier": group_identifier,
                 }
             ),
             headers=self._client_wrapper.get_headers(),
@@ -207,10 +207,10 @@ class AsyncFlowsClient:
         uid: str,
         intent: IntentRequestIntent,
         *,
-        version: typing.Optional[float] = None,
-        tag: typing.Optional[IntentRequestTag] = None,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        version: typing.Optional[float] = None,
+        tag: typing.Optional[IntentRequestTag] = None,
         force: typing.Optional[bool] = None,
     ) -> None:
         """
@@ -219,13 +219,13 @@ class AsyncFlowsClient:
 
             - intent: IntentRequestIntent.
 
-            - version: typing.Optional[float].
-
-            - tag: typing.Optional[IntentRequestTag].
-
             - user_identifier: str.
 
             - group_identifier: typing.Optional[str].
+
+            - version: typing.Optional[float].
+
+            - tag: typing.Optional[IntentRequestTag].
 
             - force: typing.Optional[bool].
         """
@@ -234,10 +234,10 @@ class AsyncFlowsClient:
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
             params=remove_none_from_dict(
                 {
-                    "version": version,
-                    "tag": tag,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
+                    "version": version,
+                    "tag": tag,
                     "force": force,
                 }
             ),

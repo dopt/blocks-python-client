@@ -52,6 +52,7 @@ from .internal_server_error_response_body import InternalServerErrorResponseBody
 from .not_found_error_response_body import NotFoundErrorResponseBody
 from .timeout_error_response_body import TimeoutErrorResponseBody
 from .unauthorized_error_response_body import UnauthorizedErrorResponseBody
+from .user_identifier_params import UserIdentifierParams
 
 __all__ = [
     "BadRequestErrorResponseBody",
@@ -102,4 +103,5 @@ __all__ = [
     "NotFoundErrorResponseBody",
     "TimeoutErrorResponseBody",
     "UnauthorizedErrorResponseBody",
+    "UserIdentifierParams",
 ]

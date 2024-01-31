@@ -49,6 +49,7 @@ from .types import (
     NotFoundErrorResponseBody,
     TimeoutErrorResponseBody,
     UnauthorizedErrorResponseBody,
+    UserIdentifierParams,
 )
 from .errors import BadRequestError, InternalServerError, NotFoundError, UnauthorizedError
 from .resources import blocks, flows
@@ -108,6 +109,7 @@ __all__ = [
     "TimeoutErrorResponseBody",
     "UnauthorizedError",
     "UnauthorizedErrorResponseBody",
+    "UserIdentifierParams",
     "blocks",
     "flows",
 ]

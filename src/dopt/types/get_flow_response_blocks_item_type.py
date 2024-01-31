@@ -12,6 +12,8 @@ class GetFlowResponseBlocksItemType(str, enum.Enum):
     MODAL = "modal"
     CHECKLIST = "checklist"
     CHECKLIST_ITEM = "checklistItem"
+    HINTS = "hints"
+    HINTS_ITEM = "hintsItem"
     TOUR = "tour"
     TOUR_ITEM = "tourItem"
 
@@ -22,6 +24,8 @@ class GetFlowResponseBlocksItemType(str, enum.Enum):
         modal: typing.Callable[[], T_Result],
         checklist: typing.Callable[[], T_Result],
         checklist_item: typing.Callable[[], T_Result],
+        hints: typing.Callable[[], T_Result],
+        hints_item: typing.Callable[[], T_Result],
         tour: typing.Callable[[], T_Result],
         tour_item: typing.Callable[[], T_Result],
     ) -> T_Result:
@@ -35,6 +39,10 @@ class GetFlowResponseBlocksItemType(str, enum.Enum):
             return checklist()
         if self is GetFlowResponseBlocksItemType.CHECKLIST_ITEM:
             return checklist_item()
+        if self is GetFlowResponseBlocksItemType.HINTS:
+            return hints()
+        if self is GetFlowResponseBlocksItemType.HINTS_ITEM:
+            return hints_item()
         if self is GetFlowResponseBlocksItemType.TOUR:
             return tour()
         if self is GetFlowResponseBlocksItemType.TOUR_ITEM:

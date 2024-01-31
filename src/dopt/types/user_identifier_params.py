@@ -6,15 +6,11 @@ import typing
 import pydantic
 
 from ..core.datetime_utils import serialize_datetime
-from .flow_intent_query_string_tag import FlowIntentQueryStringTag
 
 
-class FlowIntentQueryString(pydantic.BaseModel):
+class UserIdentifierParams(pydantic.BaseModel):
     user_identifier: str = pydantic.Field(alias="userIdentifier")
     group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
-    version: typing.Optional[float]
-    tag: typing.Optional[FlowIntentQueryStringTag]
-    force: typing.Optional[bool]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

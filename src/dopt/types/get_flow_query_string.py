@@ -11,11 +11,11 @@ from .get_flow_query_string_tag import GetFlowQueryStringTag
 
 
 class GetFlowQueryString(pydantic.BaseModel):
+    user_identifier: str = pydantic.Field(alias="userIdentifier")
+    group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
     version: typing.Optional[float]
     tag: typing.Optional[GetFlowQueryStringTag]
     include: typing.Optional[typing_extensions.Literal["block"]]
-    user_identifier: str = pydantic.Field(alias="userIdentifier")
-    group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

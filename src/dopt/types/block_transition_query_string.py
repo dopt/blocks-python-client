@@ -10,9 +10,9 @@ from ..core.datetime_utils import serialize_datetime
 
 class BlockTransitionQueryString(pydantic.BaseModel):
     transitions: typing.List[str]
-    version: float
     user_identifier: str = pydantic.Field(alias="userIdentifier")
     group_identifier: typing.Optional[str] = pydantic.Field(alias="groupIdentifier")
+    version: float
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

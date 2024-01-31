@@ -24,19 +24,25 @@ class BlocksClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_block(self, uid: str, *, version: float, user_identifier: str) -> GetBlockResponse:
+    def get_block(
+        self, uid: str, *, user_identifier: str, group_identifier: typing.Optional[str] = None, version: float
+    ) -> GetBlockResponse:
         """
         Parameters:
             - uid: str.
 
-            - version: float.
-
             - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+
+            - version: float.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}"),
-            params=remove_none_from_dict({"version": version, "userIdentifier": user_identifier}),
+            params=remove_none_from_dict(
+                {"userIdentifier": user_identifier, "groupIdentifier": group_identifier, "version": version}
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
@@ -61,9 +67,9 @@ class BlocksClient:
         uid: str,
         *,
         transitions: typing.Union[typing.Optional[str], typing.List[str]],
-        version: float,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        version: float,
     ) -> None:
         """
         Parameters:
@@ -71,11 +77,11 @@ class BlocksClient:
 
             - transitions: typing.Union[typing.Optional[str], typing.List[str]].
 
-            - version: float.
-
             - user_identifier: str.
 
             - group_identifier: typing.Optional[str].
+
+            - version: float.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -83,9 +89,9 @@ class BlocksClient:
             params=remove_none_from_dict(
                 {
                     "transitions": transitions,
-                    "version": version,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
+                    "version": version,
                 }
             ),
             json=jsonable_encoder({}),
@@ -113,19 +119,25 @@ class AsyncBlocksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_block(self, uid: str, *, version: float, user_identifier: str) -> GetBlockResponse:
+    async def get_block(
+        self, uid: str, *, user_identifier: str, group_identifier: typing.Optional[str] = None, version: float
+    ) -> GetBlockResponse:
         """
         Parameters:
             - uid: str.
 
-            - version: float.
-
             - user_identifier: str.
+
+            - group_identifier: typing.Optional[str].
+
+            - version: float.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/block/{uid}"),
-            params=remove_none_from_dict({"version": version, "userIdentifier": user_identifier}),
+            params=remove_none_from_dict(
+                {"userIdentifier": user_identifier, "groupIdentifier": group_identifier, "version": version}
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
@@ -150,9 +162,9 @@ class AsyncBlocksClient:
         uid: str,
         *,
         transitions: typing.Union[typing.Optional[str], typing.List[str]],
-        version: float,
         user_identifier: str,
         group_identifier: typing.Optional[str] = None,
+        version: float,
     ) -> None:
         """
         Parameters:
@@ -160,11 +172,11 @@ class AsyncBlocksClient:
 
             - transitions: typing.Union[typing.Optional[str], typing.List[str]].
 
-            - version: float.
-
             - user_identifier: str.
 
             - group_identifier: typing.Optional[str].
+
+            - version: float.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -172,9 +184,9 @@ class AsyncBlocksClient:
             params=remove_none_from_dict(
                 {
                     "transitions": transitions,
-                    "version": version,
                     "userIdentifier": user_identifier,
                     "groupIdentifier": group_identifier,
+                    "version": version,
                 }
             ),
             json=jsonable_encoder({}),
