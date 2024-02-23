@@ -85,7 +85,7 @@ class FlowsClient:
 
     def intent(
         self,
-        uid: str,
+        sid: str,
         intent: IntentRequestIntent,
         *,
         user_identifier: str,
@@ -96,7 +96,7 @@ class FlowsClient:
     ) -> None:
         """
         Parameters:
-            - uid: str.
+            - sid: str.
 
             - intent: IntentRequestIntent.
 
@@ -112,7 +112,7 @@ class FlowsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}/{intent}"),
             params=remove_none_from_dict(
                 {
                     "userIdentifier": user_identifier,
@@ -204,7 +204,7 @@ class AsyncFlowsClient:
 
     async def intent(
         self,
-        uid: str,
+        sid: str,
         intent: IntentRequestIntent,
         *,
         user_identifier: str,
@@ -215,7 +215,7 @@ class AsyncFlowsClient:
     ) -> None:
         """
         Parameters:
-            - uid: str.
+            - sid: str.
 
             - intent: IntentRequestIntent.
 
@@ -231,7 +231,7 @@ class AsyncFlowsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{uid}/{intent}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/flow/{sid}/{intent}"),
             params=remove_none_from_dict(
                 {
                     "userIdentifier": user_identifier,

@@ -10,7 +10,7 @@ from .flow_intent_request_params_intent import FlowIntentRequestParamsIntent
 
 
 class FlowIntentRequestParams(pydantic.BaseModel):
-    uid: str
+    sid: str
     intent: FlowIntentRequestParamsIntent
 
     def json(self, **kwargs: typing.Any) -> str:
